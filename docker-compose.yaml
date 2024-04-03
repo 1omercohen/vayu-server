@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+            - "27017:27017"
+        volumes:
+            - dbdata6:/data/db
+
+    server:
+        build: .
+        ports:
+            - 8000:8000
+        environment:
+            - MONGO_URL=mongodb://mongo:27017/vayu
+        depends_on:
+            - mongo
+        command: node server
+volumes:
+    dbdata6:
